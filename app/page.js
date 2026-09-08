@@ -19,15 +19,18 @@ export default async function Home() {
   const online = await checkOnline(ngrokUrl);
 
   return (
-    <div style={{ fontFamily: "sans-serif", textAlign: "center", marginTop: "20vh" }}>
-      <h1>{online ? "🟢 Server is online" : "🔴 Server is offline"}</h1>
-      {ngrokUrl ? (
-        <a href={ngrokUrl} style={{ fontSize: "1.2rem" }}>
-          Visit Site →
-        </a>
-      ) : (
-        <p>NGROK_URL is not set — add it in Vercel env vars and redeploy.</p>
-      )}
-    </div>
+    <>
+      {online && <meta httpEquiv="refresh" content={`1;url=${ngrokUrl}`} />}
+      <div style={{ fontFamily: "sans-serif", textAlign: "center", marginTop: "20vh" }}>
+        <h1>{online ? "🟢 Server is online — redirecting…" : "🔴 Server is offline"}</h1>
+        {ngrokUrl ? (
+          <a href={ngrokUrl} style={{ fontSize: "1.2rem" }}>
+            Visit Site →
+          </a>
+        ) : (
+          <p>NGROK_URL is not set — add it in Vercel env vars and redeploy.</p>
+        )}
+      </div>
+    </>
   );
 }
