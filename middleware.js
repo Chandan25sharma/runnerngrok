@@ -8,6 +8,7 @@ export function middleware(request) {
 
   const headers = new Headers(request.headers);
   headers.set("ngrok-skip-browser-warning", "true");
+  headers.set("host", destination.host);
 
   return NextResponse.rewrite(destination, { request: { headers } });
 }
